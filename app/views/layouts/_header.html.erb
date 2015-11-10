@@ -41,7 +41,7 @@
             </a>
             <ul class="dropdown-menu">
               <% if current_user.supervisor? %>
-                <li><%= link_to "Add new", supervisor_signup_path %></li>
+                <li><%= link_to "Add new", new_supervisor_user_path %></li>
                 <li>
                   <%= link_to "View all", supervisor_users_path(
                                           role: User::ROLE[:trainee]) %>
