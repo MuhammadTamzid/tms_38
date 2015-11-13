@@ -6,7 +6,7 @@
   <td align="right">
     <% if !user.supervisor? %>
       <%= link_to t(:edit), edit_supervisor_user_path(user),
-        class: "btn btn-success" %>
+        class: "btn btn-primary" %>
       <%= link_to t(:delete), [:supervisor, user], method: :delete,
         class: "btn btn-danger",
         data: { confirm: t(:confirm_message) } %>
