@@ -1,5 +1,8 @@
 class Task < ActiveRecord::Base
   belongs_to :subject, inverse_of: :tasks
+  has_many :completed_tasks
+  has_many :users, through: :completed_tasks
+  has_many :user_subjects, through: :completed_tasks
 
   validates :name, presence: true, length: { maximum: 20 }
   validates :description, presence: true, length: { maximum: 50 }

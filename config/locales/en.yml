@@ -27,11 +27,11 @@ en:
   end_date: "End Date"
   read_more: "Read More"
   date_check_text: "can not be greater than End date"
-  supervisor: "Supervisor"
-  trainee: "Trainee"
+  supervisor: "Supervisors"
+  trainee: "Trainees"
   add_edit_text: "Add / Edit"
   create_subject_text: "Create Subject"
-  subject_text: "Subject"
+  subject_text: "Subjects"
   add_subject_sucessful_message: "Subject added successfully"
   delete_subject_sucessful_message: "Subject deleted"
   update_subject_sccessful_message: "Subject updated"
@@ -46,6 +46,11 @@ en:
   tasks: "Tasks:"
   order: "Order"
   description: "Description"
+  operation_successful: "Operation Successful"
+  somethings_going_wrong: "Somethings Going Wrong"
+  view: "View"
+  select_subjects: "Select Subject's:"
+  subjects: "Subject's"
   date:
     order:
       - :day

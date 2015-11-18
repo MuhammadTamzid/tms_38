@@ -2,7 +2,7 @@
 <h1><%= t(:update_course) %></h1>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-8 col-md-offset-2">
     <%= form_for [:supervisor, @course] do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
@@ -17,6 +17,28 @@
 
       <%= f.label :end_date %><br>
       <%= f.date_select :end_date, class: "form-control" %>
+
+      <h3><%= t 'select_subjects' %></h3>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th><%= t(:name) %></th>
+            <th><%= t(:description) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= f.fields_for :course_subjects, @course.get_subjects_for_course do |builder| %>
+            <tr>
+              <td><%= builder.check_box :_destroy, { checked: @course.course_subjects.include?(builder.object) }, 0, 1 %></td>
+              <td><%= builder.object.subject.name %></td>
+              <td><%= builder.object.subject.description.truncate 50 %></td>
+            </tr>
+            <%= builder.hidden_field :subject_id, value: builder.object.subject_id %>
+          <% end %>
+        </tbody>
+      </table>
 
       <%= f.submit t(:update_change), class: "btn btn-primary" %>
     <% end %>

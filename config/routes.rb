@@ -10,9 +10,11 @@ Rails.application.routes.draw do
 
     namespace :supervisor do
       root 'static_pages#home'
+      resources :courses do
+        resource :course_subjects, only: [:update, :show]
+      end
       resources :users
       resources :subjects
-      resources :courses
     end
 
     resources :users
