@@ -1,8 +1,10 @@
- <tr>
+<tr>
     <td><%= link_to course.name, [:supervisor, course] %></td>
     <td><%= course.description.truncate 50 %></td>
-    <td>(0) <%= link_to t(:add_edit_text), '#' %></td>
-    <td>(0) <%= link_to t(:add_edit_text), '#' %></td>
+    <td><%= course.start_date %></td>
+    <td><%= course.end_date %></td>
+    <td><%= course.users.supervisors.count %></td>
+    <td><%= course.users.trainees.count %></td>
     <td align="right">
       <%= link_to t(:edit), edit_supervisor_course_path(course),
         class: "btn btn-primary" %>

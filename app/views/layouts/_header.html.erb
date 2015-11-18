@@ -1,23 +1,29 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "FRAMGIA TRAINING SYSTEM", root_path, id: "logo" %>
+    <% if logged_in? %>
+      <%= link_to image_tag("logo.png", alt: "", class:"logo-img"), courses_path %>
+      <%= link_to t(:fts_text), courses_path, id: "logo" %>
+    <% else %>
+      <%= link_to image_tag("logo.png", alt: "", class:"logo-img"), root_path %>
+      <%= link_to t(:fts_text), root_path, id: "logo" %>
+    <% end %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path %></li>
         <% if logged_in? %>
+          <li><%= link_to t(:home), courses_path %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Course <b class="caret"></b>
+              <%= t 'course' %><b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
               <% if current_user.supervisor? %>
-                <li><%= link_to "Add new", new_supervisor_course_path %></li>
+                <li><%= link_to t(:add_new), new_supervisor_course_path %></li>
                 <li>
-                  <%= link_to "View all", supervisor_courses_path %>
+                  <%= link_to t(:view_all), supervisor_courses_path %>
                 </li>
               <% else %>
                 <li>
-                  <%= link_to "View all", '#' %>
+                  <%= link_to t(:view_all), courses_path %>
                 </li>
               <% end %>
             </ul>
@@ -25,30 +31,30 @@
           <% if current_user.supervisor? %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Subject <b class="caret"></b>
+                <%= t 'subject' %> <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><%= link_to "Add new", new_supervisor_subject_path %></li>
+                <li><%= link_to t(:add_new), new_supervisor_subject_path %></li>
                 <li>
-                  <%= link_to "View all", supervisor_subjects_path %>
+                  <%= link_to t(:view_all), supervisor_subjects_path %>
                 </li>
               </ul>
             </li>
           <% end %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Trainee <b class="caret"></b>
+              <%= t 'trainee_text' %> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
               <% if current_user.supervisor? %>
-                <li><%= link_to "Add new", new_supervisor_user_path %></li>
+                <li><%= link_to t(:add_new), new_supervisor_user_path %></li>
                 <li>
-                  <%= link_to "View all", supervisor_users_path(
+                  <%= link_to t(:view_all), supervisor_users_path(
                                           role: User::ROLE[:trainee]) %>
                 </li>
               <% elsif current_user.trainee? %>
                 <li>
-                  <%= link_to "View all", users_path(
+                  <%= link_to t(:view_all), users_path(
                                           role: User::ROLE[:trainee]) %>
                 </li>
               <% end %>
@@ -57,11 +63,11 @@
           <% if current_user.supervisor? %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Supervisor <b class="caret"></b>
+                <%= t 'supervisor_text' %><b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <%= link_to "View all", supervisor_users_path(
+                  <%= link_to t(:view_all), supervisor_users_path(
                                           role: User::ROLE[:supervisor]) %>
                 </li>
               </ul>
@@ -69,19 +75,20 @@
           <% end %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Account <b class="caret"></b>
+              <%= t 'acnt' %> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Profile", current_user %></li>
-              <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+              <li><%= link_to t(:profile), current_user %></li>
+              <li><%= link_to t(:settings), edit_user_path(current_user) %></li>
               <li class="divider"></li>
               <li>
-                <%= link_to "Log out", logout_path, method: "delete" %>
+                <%= link_to t(:log_out), logout_path, method: "delete" %>
               </li>
             </ul>
           </li>
         <% else %>
-          <li><%= link_to "Log in", login_path %></li>
+          <li><%= link_to t(:home), root_path %></li>
+          <li><%= link_to t(:log_in), login_path %></li>
         <% end %>
       </ul>
     </nav>

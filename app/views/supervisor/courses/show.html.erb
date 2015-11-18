@@ -4,7 +4,7 @@
   <div class="panel panel-default panel-box">
     <div class="panel-heading panel-course-name"><%= @course.name %>
       <div class="pull-right">
-        <%= link_to t(:back), supervisor_courses_path,
+        <%= link_to t(:view_all), supervisor_courses_path,
           class: "btn btn-default" %>
         <%= link_to t(:edit), edit_supervisor_course_path(@course),
           class: "btn btn-primary" %>
@@ -13,8 +13,9 @@
       </div>
     </div>
     <div class="panel-body">
-    <font size="4">Supervisor's: (0)</font> <%= link_to t(:add_edit_text), '#' %> <br>
-    <font size="4">Trainee's: (0)</font> <%= link_to t(:add_edit_text), '#' %>
+      <p><font size="3"><%= link_to t(:add_edit_enrollment), supervisor_course_course_users_path(@course) %></font></p> <br>
+      <p><font size="3"><%= t 'supervisor' %>: (<%= @course.users.supervisors.count %>)</font> <%= link_to t(:view), '#' %> </p>
+      <p><font size="3"><%= t 'trainee' %>: (<%= @course.users.trainees.count %>)</font> <%= link_to t(:view), '#' %> </p> <br>
 
       <h3><%= t 'subjects' %></h3>
 
@@ -29,7 +30,7 @@
           <% @course.course_subjects.each do |course_subject| %>
             <tr>
               <td><%= link_to course_subject.subject.name, [:supervisor, course_subject.subject] %></td>
-              <td><%= course_subject.subject.description.truncate 100 %></td>
+              <td><%= course_subject.subject.description.truncate 120 %></td>
             </tr>
           <% end %>
         </tbody>
@@ -38,15 +39,13 @@
       <br>
       <h3><%= t 'description' %></h3>
       <p><%= @course.description %></p>
-
-
     </div>
     <div class="panel-footer panel-course-footer">
       <div class="col-sm-2">
-        Started on: <%= l @course.start_date, :format => :short %>
+        <%= t 'start_date' %>: <%= l @course.start_date, :format => :short %>
       </div>
       <div class="col-sm-2">
-        Ended on: <%= l @course.end_date, :format => :short %>
+        <%= t 'end_date' %>: <%= l @course.end_date, :format => :short %>
       </div>
     </div>
   </div>

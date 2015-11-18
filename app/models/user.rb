@@ -1,4 +1,12 @@
 class User < ActiveRecord::Base
+  has_many :course_users
+  has_many :courses, through: :course_users
+  has_many :user_subjects
+  has_many :subjects, through: :user_subjects
+  has_many :completed_tasks
+  has_many :tasks, through: :completed_tasks
+  has_many :activities, dependent: :destroy
+
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 }
