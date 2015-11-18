@@ -1,14 +1,15 @@
 <footer class="footer">
   <small>
-    Framgia Training System by
-    <a href="#">
-      Team04 (Tamzid, Salekin, Sujoy)
-    </a>
+    <%= t 'fts_text' %>
+    <a href="https://www.facebook.com/FramgiaBangladesh" target="_blank">© Framgia Bangladesh 2015</a>
+  </small> <br>
+  <small>
+    <%= t 'dev_by' %> <a href="#">Team04(Tamzid, Salekin, Sujoy)</a>
   </small>
   <nav>
     <ul>
-      <li><%= link_to "About",   about_path %></li>
-      <li><%= link_to "Contact", contact_path %></li>
+      <li><%= link_to t(:about), about_path %></li>
+      <li><%= link_to t(:contact), contact_path %></li>
     </ul>
   </nav>
 </footer>

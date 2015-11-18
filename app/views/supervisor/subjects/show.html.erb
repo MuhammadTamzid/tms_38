@@ -4,7 +4,7 @@
   <div class="panel panel-default panel-box">
     <div class="panel-heading panel-course-name"><%= @subject.name %>
       <div class="pull-right">
-        <%= link_to t(:back), supervisor_subjects_path,
+        <%= link_to t(:view_all), supervisor_subjects_path,
                                                     class: "btn btn-default" %>
         <%= link_to t(:edit), edit_supervisor_subject_path(@subject),
                                                     class: "btn btn-primary" %>
