@@ -1,6 +1,10 @@
 class CourseUser < ActiveRecord::Base
   belongs_to :course
   belongs_to :user
+  belongs_to :trainees, -> {trainees}, class_name: "User",
+              foreign_key: "user_id"
+  belongs_to :supervisors, -> {supervisors}, class_name: "User",
+              foreign_key: "user_id"
 
   validates :course_id, uniqueness: {scope: :user_id}
 

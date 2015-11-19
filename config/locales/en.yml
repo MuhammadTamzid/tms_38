@@ -27,8 +27,8 @@ en:
   end_date: "End Date"
   read_more: "Read More"
   date_check_text: "can not be greater than End date"
-  supervisor: "Supervisor's"
-  trainee: "Trainee's"
+  supervisor: "Supervisors"
+  trainee: "Trainees"
   add_edit_text: "Add / Edit"
   create_subject_text: "Create Subject"
   subject_text: "Subjects"
@@ -74,7 +74,9 @@ en:
   about: "About"
   contact: "Contact"
   assign_courses: "Assign Courses"
-
+  no_of_trainee: "No. of trainee"
+  no_of_supervisor: "No. of supervisor"
+  close_text: "Close"
   date:
     order:
       - :day

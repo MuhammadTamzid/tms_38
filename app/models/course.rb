@@ -1,6 +1,9 @@
 class Course < ActiveRecord::Base
   has_many :course_users, dependent: :destroy
   has_many :users, through: :course_users
+  has_many :trainees, -> {trainees}, class_name: "User", through: :course_users
+  has_many :supervisors, -> {supervisors}, class_name: "User",
+            through: :course_users
   has_many :course_subjects, dependent: :destroy
   has_many :subjects, through: :course_subjects
   has_many :user_subjects

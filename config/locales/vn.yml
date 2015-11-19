@@ -46,6 +46,9 @@ vn:
   tasks: "các tác vụ:"
   order: "Gọi món"
   description: "Miêu tả"
+  no_of_trainee: "Số học viên"
+  no_of_supervisor: "Số người giám sát"
+  close_text: "chặt chẽ"
   date:
     order:
       - :day
