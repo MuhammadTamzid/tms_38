@@ -4,23 +4,11 @@
   <div class="panel panel-default panel-box">
     <div class="panel-heading panel-course-name"><%= @course.name %>
       <div class="pull-right">
-        <%= link_to t(:view_all), supervisor_courses_path,
+        <%= link_to t(:assign_courses), courses_path,
           class: "btn btn-default" %>
-        <%= link_to t(:edit), edit_supervisor_course_path(@course),
-          class: "btn btn-primary" %>
-        <%= link_to t(:delete), [:supervisor, @course], method: :delete,
-          class: "btn btn-danger", data: { confirm: t(:confirm_message) } %>
       </div>
     </div>
     <div class="panel-body">
-      <p>
-        <font size="3">
-          <%= link_to t(:add_edit_enrollment),
-            supervisor_course_course_users_path(@course),
-              class: "btn btn-success btn-xs"%>
-        </font>
-      </p>
-      <br>
       <p>
         <font size="3">
           <%= t 'supervisor' %>: (<%= @course.supervisors.count %>)
@@ -55,7 +43,7 @@
                 <tr>
                   <td>
                     <%= gravatar_for supervisor, size: 30 %>
-                    <%= link_to supervisor.name, supervisor %>
+                    <%= supervisor.name %>
                     | <%= supervisor.email %>
                     <hr>
                   </td>
@@ -101,6 +89,7 @@
         </div>
       </div>
       <h3><%= t 'subjects' %></h3>
+
       <table class="table">
         <thead>
           <tr>
@@ -112,14 +101,16 @@
           <% @subjects.each do |subject| %>
             <tr>
               <td>
-                <%= link_to subject.name, supervisor_course_subject_path(
-                  course_id: @course.id, subject_id: subject.id) %>
+                <%= link_to subject.name, user_subject_path(
+                  user_id: current_user.id, course_id: @course.id,
+                    subject_id: subject.id) %>
               </td>
               <td><%= subject.description.truncate 120 %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
+
       <br>
       <h3><%= t 'description' %></h3>
       <p><%= @course.description %></p>

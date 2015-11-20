@@ -10,4 +10,17 @@ class UserSubject < ActiveRecord::Base
 
   scope :search_by_subject, ->subject_id{where subject_id: subject_id}
   scope :search_by_user, ->user_id{where user_id: user_id}
+
+  accepts_nested_attributes_for :completed_tasks, allow_destroy: true,
+    reject_if: proc{|a| a[:task_id] == "0"}
+
+  class << self
+    def find_by_user_id_and_course_id_and_subject_id user_id, course_id, subject_id
+      UserSubject.find_by(user_id: user_id, course_id: course_id, subject_id: subject_id)
+    end
+  end
+
+  def completed? user
+    self.completed_tasks.count == user.tasks.filter_by_subject(subject).count
+  end
 end

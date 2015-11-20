@@ -1,4 +1,4 @@
-<h1><%= t(:all_course) %></h1>
+<h1><%= params[:user_id] != nil ? t(:assign_courses) : t(:all_course) %></h1>
 
 <%= will_paginate %>
 

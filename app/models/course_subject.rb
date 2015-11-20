@@ -7,6 +7,12 @@ class CourseSubject < ActiveRecord::Base
   after_save :enroll_subject_to_user
   after_destroy :delete_subject_users
 
+  class << self
+    def find_by_course_id_and_subject_id course_id, subject_id
+      CourseSubject.find_by(course_id: course_id, subject_id: subject_id)
+    end
+  end
+
   private
   def enroll_subject_to_user
     course.course_users.each do |course_user|
