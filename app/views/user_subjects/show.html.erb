@@ -6,6 +6,9 @@
       <div class="pull-right">
         <%= link_to t(:back), @course,
           class: "btn btn-default" %>
+        <% if @course_subject.is_finished? %>
+          <button class="btn btn-default disabled"><b><%= t 'finished' %></b></button>
+        <% end %>
       </div>
     </div>
     <div class="panel-body">
@@ -13,7 +16,7 @@
       <div class="progress">
         <div class="progress-bar progress-bar-success progress-bar-striped"
           style="width: <%= subject_completed_percentage(@user_subject) %>%">
-            <%= subject_completed_percentage @user_subject  %>%
+            <%= subject_completed_percentage @user_subject %>%
         </div>
       </div>
       <p><%= @subject.description %></p>
@@ -61,10 +64,16 @@
         </div>
         <center>
           <%= f.submit t(:update), class: "btn btn-primary submitButtonHolder",
-            disabled: subject_completed_percentage(@user_subject) == 100 %>
+            disabled: subject_completed_percentage(@user_subject) == 100 ||
+            @course_subject.is_finished? ||
+            @user_subject.course.is_closed? %>
         </center>
       <% end %>
     </div>
     <div class="panel-footer panel-course-footer"></div>
   </div>
+</div>
+
+<div class="row">
+  <%= render "shared/activity_log", activities: @activities %>
 </div>

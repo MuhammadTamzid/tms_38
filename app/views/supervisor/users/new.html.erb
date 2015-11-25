@@ -18,5 +18,16 @@
 
       <%= f.submit t(:add_trainee_text), class: "btn btn-primary" %>
     <% end %>
+
+    <br><br>
+    <h3><b><%= t 'import_trainees' %>:</b></h3>
+    <div class="form-inline">
+      <div class="form-group">
+        <%= form_tag supervisor_uploads_path, multipart: true do %>
+          <%= file_field_tag :file, class: "col-sm-8 form-control" %>
+          <%= submit_tag t(:import), class: "submitButton btn btn-primary importCsvButton" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

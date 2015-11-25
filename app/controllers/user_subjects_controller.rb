@@ -7,6 +7,9 @@ class UserSubjectsController < ApplicationController
     @subject = @user_subject.subject
     @tasks = @subject.tasks
     @user_id = @user_subject.user_id
+    @activities = @user_subject.activities.latest.paginate page: params[:page],
+      per_page: 10
+    @course_subject = CourseSubject.find_by_course_id_and_subject_id @course.id, @subject.id
     init_completed_tasks
   end
 

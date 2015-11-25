@@ -1,13 +1,14 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :show]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :load_user, only: [:show]
+  before_action :load_user, only: [:show, :edit, :update]
 
   def index
-    @users = User.trainees.paginate page: params[:page]
+    @users = User.trainees.paginate page: params[:page], per_page: 20
   end
 
   def show
+    @activities = @user.activities.latest.paginate page: params[:page],
+      per_page: 10
   end
 
   def edit
@@ -37,12 +38,6 @@ class UsersController < ApplicationController
       flash[:danger] = t 'login_message'
       redirect_to login_url
     end
-  end
-
-  # Confirms the correct user.
-  def correct_user
-    @user = User.find params[:id]
-    redirect_to(root_url) unless current_user?(@user)
   end
 
   def load_user

@@ -3,6 +3,10 @@ class Supervisor::SubjectsController < ApplicationController
 
   def index
     @subjects = Subject.all.paginate page: params[:page], per_page: 10
+    respond_to do |format|
+      format.html
+      format.csv { send_data @subjects.to_csv, filename: "Subjects.csv" }
+    end
   end
 
   def show

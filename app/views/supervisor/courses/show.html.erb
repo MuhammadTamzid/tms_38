@@ -4,6 +4,14 @@
   <div class="panel panel-default panel-box">
     <div class="panel-heading panel-course-name"><%= @course.name %>
       <div class="pull-right">
+        <% unless @course.is_closed? %>
+          <%= link_to t("close"),
+            supervisor_course_path(@course, type: "close"),
+            method: :patch, data: {confirm: t("confirm_message")},
+            class: "btn btn-warning" %>
+        <% else %>
+          <button class="btn btn-default disabled"><b><%= t 'closed' %></b></button>
+        <% end %>
         <%= link_to t(:view_all), supervisor_courses_path,
           class: "btn btn-default" %>
         <%= link_to t(:edit), edit_supervisor_course_path(@course),
@@ -13,14 +21,15 @@
       </div>
     </div>
     <div class="panel-body">
-      <p>
+      <% unless @course.is_closed? %>
+        <p>
         <font size="3">
           <%= link_to t(:add_edit_enrollment),
             supervisor_course_course_users_path(@course),
               class: "btn btn-success btn-xs"%>
         </font>
-      </p>
-      <br>
+      </p> <br>
+      <% end %>
       <p>
         <font size="3">
           <%= t 'supervisor' %>: (<%= @course.supervisors.count %>)
@@ -55,7 +64,7 @@
                 <tr>
                   <td>
                     <%= gravatar_for supervisor, size: 30 %>
-                    <%= link_to supervisor.name, supervisor %>
+                    <%= link_to supervisor.name, [:supervisor, supervisor] %>
                     | <%= supervisor.email %>
                     <hr>
                   </td>
@@ -133,4 +142,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="row">
+  <%= render "shared/activity_log", activities: @activities %>
 </div>

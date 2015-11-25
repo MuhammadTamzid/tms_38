@@ -11,4 +11,9 @@ class Task < ActiveRecord::Base
   validates :subject, presence: true
 
   scope :filter_by_subject, ->subject{where subject_id: subject.id}
+
+  def finished? completed_tasks, user_subject
+    completed_tasks.detect{|completed_task| completed_task.user_subject_id == user_subject.id &&
+      completed_task.task_id == self.id}.present?
+  end
 end

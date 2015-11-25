@@ -6,7 +6,14 @@
       <div class="pull-right">
         <%= link_to t(:back), [:supervisor, @course],
           class: "btn btn-default" %>
-        <%= link_to t("finish"), '#', class: "btn btn-warning" %>
+        <% unless @course_subject.is_finished? %>
+          <%= link_to t("finish"),
+            supervisor_course_subject_path(@course_subject),
+            method: :patch, data: {confirm: t("confirm_message")},
+            class: "btn btn-warning" %>
+        <% else %>
+          <button class="btn btn-default disabled"><b><%= t 'finished' %></b></button>
+        <% end %>
       </div>
     </div>
     <div class="panel-body">

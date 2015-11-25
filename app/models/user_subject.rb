@@ -20,7 +20,7 @@ class UserSubject < ActiveRecord::Base
     end
   end
 
-  def completed? user
-    self.completed_tasks.count == user.tasks.filter_by_subject(subject).count
+  def completed?
+    self.subject.tasks.count == self.completed_tasks.count
   end
 end

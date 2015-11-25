@@ -4,11 +4,18 @@
   <div class="panel panel-default panel-box">
     <div class="panel-heading panel-course-name"><%= @course.name %>
       <div class="pull-right">
-        <%= link_to t(:assign_courses), courses_path,
+        <%= link_to t(:assign_course), courses_path,
           class: "btn btn-default" %>
       </div>
     </div>
     <div class="panel-body">
+      <b><%= t 'progress' %>:</b>
+      <div class="progress">
+        <div class="progress-bar progress-bar-success progress-bar-striped"
+          style="width: <%= @course.course_completed_percentage(current_user) %>%">
+            <%= @course.course_completed_percentage(current_user) %>%
+        </div>
+      </div>
       <p>
         <font size="3">
           <%= t 'supervisor' %>: (<%= @course.supervisors.count %>)
@@ -124,4 +131,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="row">
+  <%= render "shared/activity_log", activities: @activities %>
 </div>

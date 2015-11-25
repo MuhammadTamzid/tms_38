@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include PrettyUrl
+
   has_many :course_users
   has_many :courses, through: :course_users
   has_many :user_subjects
@@ -6,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :completed_tasks
   has_many :tasks, through: :completed_tasks
   has_many :activities, dependent: :destroy
+  has_many :reports, dependent: :destroy
 
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
@@ -19,10 +22,21 @@ class User < ActiveRecord::Base
 
   enum role: [:supervisor, :trainee]
 
-  scope :supervisors, -> {supervisor}
-  scope :trainees, -> {trainee}
+  scope :supervisors, ->{supervisor}
+  scope :trainees, ->{trainee}
 
   ROLE = { supervisor: 'supervisor', trainee: 'trainee' }
+
+  class << self
+    def search_by_course_id course_id
+      if course_id && !course_id.empty?
+        course = Course.find course_id
+        course.users
+      else
+        User.all
+      end
+    end
+  end
 
   # Returns the hash digest of the given string.
   def User.digest string

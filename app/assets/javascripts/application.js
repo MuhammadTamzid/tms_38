@@ -26,3 +26,20 @@ function remove_fields(link) {
   $(link).prev("input[type=hidden]").val("1");
   $(link).closest(".fields").hide();
 }
+
+$(document).on('page:change', function() {
+  $('.divProfile').hide();
+    $(".buttonToggle").click(function(){
+      var profile_to_hide = this.id;
+      if (this.innerHTML == "Show"){
+        this.innerHTML = "Hide";
+        this.className = "btn btn-warning pull-right"
+        $("div."+profile_to_hide).slideDown("fast");
+      }
+      else{
+        this.innerHTML = "Show";
+        this.className = "btn btn-success pull-right"
+        $("div."+profile_to_hide).fadeOut("fast");
+      }
+    });
+})

@@ -1,7 +1,10 @@
 class Course < ActiveRecord::Base
-  has_many :course_users, dependent: :destroy
+  include PrettyUrl
+
+  has_many :course_users, dependent: :destroy, inverse_of: :course
   has_many :users, through: :course_users
-  has_many :trainees, -> {trainees}, class_name: "User", through: :course_users
+  has_many :trainees, -> {trainees}, class_name: "User",
+            through: :course_users
   has_many :supervisors, -> {supervisors}, class_name: "User",
             through: :course_users
   has_many :course_subjects, dependent: :destroy
@@ -9,6 +12,7 @@ class Course < ActiveRecord::Base
   has_many :user_subjects
   has_many :completed_tasks, through: :user_subjects
   has_many :tasks, through: :subjects
+  has_many :activities
 
   validates :name, presence: true, length:{minimum: 3},
                                    uniqueness: {case_sensitive: false}
@@ -19,10 +23,17 @@ class Course < ActiveRecord::Base
 
   accepts_nested_attributes_for :course_subjects, allow_destroy: true
 
+  scope :current_enrolled, ->{where "is_closed = ?", false}
+  scope :latest, ->{order created_at: :desc}
+
   class << self
-    def get_courses user_id
-      unless user_id.nil?
+    def get_courses user_id, course_name
+      if !user_id.nil? && !course_name.nil?
+        User.find(user_id).courses.where('name LIKE ?', "%#{course_name.strip}%")
+      elsif !user_id.nil?
         User.find(user_id).courses
+      elsif !course_name.nil?
+        Course.where('name LIKE ?', "%#{course_name.strip}%")
       else
         Course.all
       end
@@ -59,5 +70,17 @@ class Course < ActiveRecord::Base
   def finished? user
     completed_tasks = self.completed_tasks.filter_by_user user
     completed_tasks.count == self.tasks.count
+  end
+
+  def course_completed_percentage user
+    completed_tasks = self.completed_tasks.filter_by_user user
+    percent = self.tasks.count > 0 ?
+      completed_tasks.count * 100 / self.tasks.count : 0
+    percent.round(0)
+  end
+
+  def percent user
+    completed_tasks = self.completed_tasks.filter_by_user user
+    self.tasks.count > 0 ? completed_tasks.count * 100 / self.tasks.count : 0
   end
 end

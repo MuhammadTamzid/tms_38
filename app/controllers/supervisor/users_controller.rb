@@ -1,11 +1,14 @@
 class Supervisor::UsersController < ApplicationController
   before_action :load_user, except: [:index, :create, :new]
+  before_action :correct_user, only: [:edit, :update]
 
   def index
-    @users = User.send(params[:role].pluralize).paginate page: params[:page]
+    @users = User.search_by_course_id(params[:course_id]).send(params[:role].pluralize).paginate page: params[:page], per_page: 20
   end
 
   def show
+    @activities = @user.activities.latest.paginate page: params[:page],
+      per_page: 10
   end
 
   def new
@@ -29,7 +32,7 @@ class Supervisor::UsersController < ApplicationController
   def update
     if @user.update_attributes user_params
       flash[:success] = t 'update_profile_sucessful_message'
-      redirect_to @user
+      redirect_to [:supervisor, @user]
     else
       render 'edit'
     end
@@ -51,5 +54,11 @@ class Supervisor::UsersController < ApplicationController
 
   def load_user
     @user = User.find params[:id]
+  end
+
+   # Confirms the correct user.
+  def correct_user
+    @user = User.find params[:id]
+    redirect_to root_url unless current_user?(@user)
   end
 end
