@@ -2,10 +2,15 @@ class Supervisor::CoursesController < ApplicationController
   before_action :load_course, except: [:index, :new, :create]
 
   def index
-    @courses= Course.all.paginate page: params[:page], per_page: 10
+    @courses = Course.get_courses(params[:user_id])
+                     .paginate page: params[:page], per_page: 10
   end
 
   def show
+    @supervisors = @course.supervisors
+    @trainees = @course.trainees
+    @subjects = @course.subjects
+    @user_subjects = @course.user_subjects
   end
 
   def new

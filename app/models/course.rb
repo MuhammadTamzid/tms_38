@@ -19,6 +19,16 @@ class Course < ActiveRecord::Base
 
   accepts_nested_attributes_for :course_subjects, allow_destroy: true
 
+  class << self
+    def get_courses user_id
+      unless user_id.nil?
+        User.find(user_id).courses
+      else
+        Course.all
+      end
+    end
+  end
+
   def dates_check
     if start_date > end_date
       errors.add(:start_date, I18n.t("date_check_text"))
@@ -44,5 +54,10 @@ class Course < ActiveRecord::Base
       end
     end
     return_course_subjects
+  end
+
+  def finished? user
+    completed_tasks = self.completed_tasks.filter_by_user user
+    completed_tasks.count == self.tasks.count
   end
 end

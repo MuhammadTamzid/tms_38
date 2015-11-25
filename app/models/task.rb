@@ -9,4 +9,6 @@ class Task < ActiveRecord::Base
   validates :task_order, presence: true, numericality: {only_integer: true,
                                          greater_than_or_equal_to: 0}
   validates :subject, presence: true
+
+  scope :filter_by_subject, ->subject{where subject_id: subject.id}
 end

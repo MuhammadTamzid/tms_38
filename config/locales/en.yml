@@ -77,6 +77,10 @@ en:
   no_of_trainee: "No. of trainee"
   no_of_supervisor: "No. of supervisor"
   close_text: "Close"
+  tasks_finished: "Task Finished"
+  update: "Update"
+  finish: "Finish"
+  progress: "Progress"
   date:
     order:
       - :day
